@@ -1,0 +1,6 @@
+[submodule "alibaba-dp-workload"]
+	path = alibaba-dp-workload
+	url = git@github.com:columbia/alibaba-dp-workload.git
+[submodule "PrivateKube"]
+	path = PrivateKube
+	url = git@github.com:DelphianCalamity/PrivateKube.git

@@ -2,7 +2,7 @@
 
 This repository contains the artifact for "Efficiently Packing Privacy Budget with DPack", published at EuroSys '25. The artifact contains three main components:
 - `PrivateKube`: A fork of PrivateKube (OSDI '21) which implements the DPack scheduler in addition to the original DPF scheduler.
-- `alibaba-dp-workload`: The Alibaba-DP Workload, a benchmark to evaluate secheduling algorithms for differential privacy,
+- `alibaba-dp-workload`: The Alibaba-DP Workload, a benchmark to evaluate scheduling algorithms for differential privacy,
 - `privacypacking`: a Python simulator to specify and evaluate scheduling algorithms in various settings.
 
 ## Running experiments

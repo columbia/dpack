@@ -47,7 +47,7 @@ git submodule init && git submodule update
 
 Download the original Alibaba trace. This step should take about 5 minutes:
 ```bash 
-bash alibaba-dp-workload/download_alibaba_data.sh
+bash alibaba-dp-workload/download_alibaba_data.sh && mv cluster-trace-gpu-v2020 alibaba-dp-workload
 ```
 
 Install the Alibaba package locally. Make sure you run this step from a Python environment with all the dependencies (see Step 1).

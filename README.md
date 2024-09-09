@@ -48,8 +48,6 @@ The following command runs an experiment comparing the performance of DPF, DPack
 
 ```bash
 sudo docker run -v $PWD/logs:/dpack/logs -v $PWD/experiments:/dpack/experiments -v $PWD/dpack/config:/dpack/dpack/config -v $PWD/temp:/tmp --network=host --name dpack --shm-size=204.89gb --rm dpack packaging/run.sh
-
-python experiments/plot_alibaba.py
 ```
 
 You can see the raw numbers in the logs, and also a figure generated in `experiments/figures/alibaba`.

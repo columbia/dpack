@@ -9,60 +9,37 @@ This repository contains the artifact for "Efficiently Packing Privacy Budget wi
 
 In this section, we provide instructions to reproduce certain experiments from the paper, using the Alibaba-DP workload and the Python simulator.
 
-### 0. Requirements
+## 1. Requirements
 
-The simulator and the Alibaba trace need to run in a Python environment with the dependencies listed in `pyproject.toml`. We recommend [Poetry](https://python-poetry.org), which can be installed with:
-
-```bash
-curl -sSL https://install.python-poetry.org | python3 -
-```
+Make sure you have a working installation of [`docker`](https://docs.docker.com/engine/install/ubuntu/).
 
 Additionally, certain microbenchmarks need a local Gurobi license to compute the optimal allocation, which is [free for academics](https://www.gurobi.com/academia/academic-program-and-licenses/). Gurobi is not required for the Alibaba macrobenchmarks, which only uses heuristics.
 
 Trace generation and experiments need less than 5Gb of free disk space. We recommend using a machine with at least 64Gb of RAM and 16 CPU cores.
 
+## 2. Install DPack
+### Download the code
 
-### 1. Initialization
-
-First, clone the current repository and go to its root directory:
-
+Clone this repository on your machine:
 ```bash
-git clone git@github.com:columbia/dpack.git
+git clone https://github.com/columbia/dpack.git
+```
+
+Enter the repository:
+```bash
 cd dpack
 ```
 
-Then, initialize a new Python environment with the right dependencies. For instance, with Poetry:
-
-```bash
-poetry shell
-poetry install
-```
-
-### 2. Preparing the Alibaba data
-
 Fetch our code for the Alibaba-DP workload:
 ```bash
-git submodule init && git submodule update
+git submodule update --init --recursive
 ```
 
-Download the original Alibaba trace. This step should take about 5 minutes:
-```bash 
-bash alibaba-dp-workload/download_alibaba_data.sh && mv cluster-trace-gpu-v2020 alibaba-dp-workload
-```
+### Build the DPack docker
+Build the docker image for DPack. This will automatically install all dependencies required for DPack as well as the Alibaba DP trace used in the evaluation of the paper.
 
-Install the Alibaba package locally. Make sure you run this step from a Python environment with all the dependencies (see Step 1).
 ```bash
-pip install -e alibaba-dp-workload
-```
-
-Generate the Alibaba-DP trace. This step can take one or two hours:
-```bash
-python alibaba-dp-workload/alibaba_privacy_workload/generate.py
-```
-
-Copy the Alibaba-DP trace to the simulator's data directory:
-```bash
-mkdir -p data/alibaba && cp alibaba-dp-workload/outputs/privacy_tasks_30_days.csv data/alibaba/
+sudo docker build --network host -t dpack -f Dockerfile .
 ```
 
 ### 3. Running an experiment
@@ -70,7 +47,7 @@ mkdir -p data/alibaba && cp alibaba-dp-workload/outputs/privacy_tasks_30_days.cs
 The following command runs an experiment comparing the performance of DPF, DPack and FCFS on the Alibaba trace, when we vary the number of blocks. This is similar to Fig 6b of the paper. It takes about 2 hours to run. 
 
 ```bash
-python experiments/plot_alibaba.py
+sudo docker run -v $PWD/logs:/dpack/logs -v $PWD/experiments:/dpack/experiments -v $PWD/dpack/config:/dpack/dpack/config -v $PWD/temp:/tmp --network=host --name dpack --shm-size=204.89gb --rm dpack packaging/run.sh
 ```
 
 You can see the raw numbers in the logs, and also a figure generated in `experiments/figures/alibaba`.

@@ -43,4 +43,5 @@ def plot_alibaba():
 if __name__ == "__main__":
     os.environ["LOGURU_LEVEL"] = "WARNING"
     os.environ["TUNE_DISABLE_AUTO_CALLBACK_LOGGERS"] = "1"
+    os.environ["TUNE_DISABLE_AUTO_CALLBACK_SYNCER"] = "1"
     plot_alibaba()

@@ -39,7 +39,7 @@ git submodule update --init --recursive
 Build the docker image for DPack. This will automatically install all dependencies required for DPack as well as the Alibaba DP trace used in the evaluation of the paper.
 
 ```bash
-sudo docker build --network host -t dpack -f Dockerfile .
+sudo docker build --network host --shm-size=204.89gb -t dpack -f Dockerfile .
 ```
 
 ### 3. Running an experiment
